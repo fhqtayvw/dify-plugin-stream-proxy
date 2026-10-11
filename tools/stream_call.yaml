@@ -1,0 +1,69 @@
+identity:
+  name: stream_call
+  author: zhaocg
+  label:
+    en_US: Stream Call
+    zh_Hans: 流式调用
+  description:
+    en_US: Call a Dify app with streaming response
+    zh_Hans: 流式调用Dify应用
+description:
+  human:
+    en_US: Call another Dify app via its Service API with streaming response, forwarding answer chunks in real time.
+    zh_Hans: 通过 Service API 流式调用另一个 Dify 应用，实时转发回答片段。
+  llm: Use this tool to call another Dify application with streaming response mode.
+parameters:
+  - name: query
+    type: string
+    required: true
+    label:
+      en_US: Query
+      zh_Hans: 查询内容
+    human_description:
+      en_US: The user query to send to the target app
+      zh_Hans: 发送给目标应用的用户查询
+    form: llm
+  - name: app_id
+    type: string
+    required: true
+    label:
+      en_US: Target App ID
+      zh_Hans: 目标应用ID
+    human_description:
+      en_US: UUID of the target Dify app
+      zh_Hans: 目标Dify应用的UUID
+    form: llm
+  - name: conversation_id
+    type: string
+    required: false
+    default: ''
+    label:
+      en_US: Conversation ID
+      zh_Hans: 会话ID
+    human_description:
+      en_US: Conversation ID of the target app, used to keep multi-turn context. Leave empty to start a new conversation.
+      zh_Hans: 目标应用的会话ID，用于维持多轮上下文。留空则开启新会话。
+    form: llm
+  - name: inputs
+    type: string
+    required: false
+    default: ''
+    label:
+      en_US: Inputs (JSON)
+      zh_Hans: 输入变量(JSON)
+    human_description:
+      en_US: 'JSON object of the target app''s start-node variables, e.g. {"user_id": "abc"}. Leave empty if the target app declares none.'
+      zh_Hans: '目标应用开始节点变量的 JSON 对象，例如 {"user_id": "abc"}。目标应用没有输入变量时留空。'
+    form: llm
+output_schema:
+  type: object
+  properties:
+    answer:
+      type: string
+      description: 流式聚合的完整回答文本
+    conversation_id:
+      type: string
+      description: 新的对话ID，用于维持多轮上下文
+extra:
+  python:
+    source: tools/stream_call.py

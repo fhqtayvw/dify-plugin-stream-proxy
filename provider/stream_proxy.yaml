@@ -1,0 +1,36 @@
+identity:
+  author: zhaocg
+  name: stream_proxy
+  label:
+    en_US: Stream Proxy
+    zh_Hans: 流式代理
+  description:
+    en_US: Call another Dify app with streaming response
+    zh_Hans: 流式调用另一个Dify应用
+  icon: icon.svg
+credentials_for_provider:
+  log_level:
+    type: select
+    required: false
+    default: INFO
+    options:
+      - value: DEBUG
+        label:
+          en_US: DEBUG
+          zh_Hans: 调试
+      - value: INFO
+        label:
+          en_US: INFO
+          zh_Hans: 信息
+      - value: ERROR
+        label:
+          en_US: ERROR
+          zh_Hans: 错误
+    label:
+      en_US: Log Level
+      zh_Hans: 日志级别
+tools:
+  - tools/stream_call.yaml
+extra:
+  python:
+    source: provider/stream_proxy.py

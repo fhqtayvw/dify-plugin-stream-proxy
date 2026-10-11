@@ -1,0 +1,32 @@
+version: 0.1.0
+type: plugin
+author: zhaocg
+name: stream-proxy
+label:
+  en_US: Dify Stream Proxy
+  zh_Hans: Dify流式代理
+description:
+  en_US: Call another Dify app with real-time streaming response passthrough
+  zh_Hans: 实时调用另一个Dify应用并流式透传响应
+icon: icon.svg
+resource:
+  memory: 268435456
+  permission:
+    tool:
+      enabled: true
+    app:
+      enabled: true
+plugins:
+  tools:
+    - provider/stream_proxy.yaml
+meta:
+  version: 0.1.0
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: '3.12'
+    entrypoint: main
+created_at: '2025-05-25T00:00:00+08:00'
+verified: false

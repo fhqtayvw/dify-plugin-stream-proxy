@@ -1,0 +1,7 @@
+# Dify plugins run inside a Linux container -- keep every text file LF
+# in the repository AND in the working tree, whatever the local platform.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.difypkg binary

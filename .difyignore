@@ -1,0 +1,10 @@
+.git
+.gitignore
+.gitattributes
+.github
+__pycache__
+*.pyc
+.pytest_cache
+tests
+*.difypkg
+.venv
