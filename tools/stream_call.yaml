@@ -4,13 +4,19 @@ identity:
   label:
     en_US: Stream Call
     zh_Hans: 流式调用
+    ja_JP: ストリーム呼び出し
+    pt_BR: Chamada em Stream
   description:
     en_US: Call a Dify app with streaming response
     zh_Hans: 流式调用Dify应用
+    ja_JP: ストリーミング応答で Dify アプリを呼び出します
+    pt_BR: Chame um app Dify com resposta em streaming
 description:
   human:
     en_US: Call another Dify app via its Service API with streaming response, forwarding answer chunks in real time.
     zh_Hans: 通过 Service API 流式调用另一个 Dify 应用，实时转发回答片段。
+    ja_JP: Service API 経由で別の Dify アプリをストリーミング応答で呼び出し、回答の断片をリアルタイムで転送します。
+    pt_BR: Chame outro app Dify via Service API com resposta em streaming, encaminhando os trechos da resposta em tempo real.
   llm: Use this tool to call another Dify application with streaming response mode.
 parameters:
   - name: query
@@ -19,9 +25,13 @@ parameters:
     label:
       en_US: Query
       zh_Hans: 查询内容
+      ja_JP: クエリ
+      pt_BR: Consulta
     human_description:
       en_US: The user query to send to the target app
       zh_Hans: 发送给目标应用的用户查询
+      ja_JP: 対象アプリに送信するユーザーのクエリ
+      pt_BR: A consulta do usuário a ser enviada ao app de destino
     form: llm
   - name: app_id
     type: string
@@ -29,9 +39,13 @@ parameters:
     label:
       en_US: Target App ID
       zh_Hans: 目标应用ID
+      ja_JP: 対象アプリ ID
+      pt_BR: ID do App de Destino
     human_description:
       en_US: UUID of the target Dify app
       zh_Hans: 目标Dify应用的UUID
+      ja_JP: 対象 Dify アプリの UUID
+      pt_BR: UUID do app Dify de destino
     form: llm
   - name: conversation_id
     type: string
@@ -40,9 +54,13 @@ parameters:
     label:
       en_US: Conversation ID
       zh_Hans: 会话ID
+      ja_JP: 会話 ID
+      pt_BR: ID da Conversa
     human_description:
       en_US: Conversation ID of the target app, used to keep multi-turn context. Leave empty to start a new conversation.
       zh_Hans: 目标应用的会话ID，用于维持多轮上下文。留空则开启新会话。
+      ja_JP: 対象アプリの会話 ID。複数ターンの文脈を維持するために使用します。空欄の場合は新しい会話を開始します。
+      pt_BR: ID da conversa do app de destino, usado para manter o contexto de múltiplos turnos. Deixe vazio para iniciar uma nova conversa.
     form: llm
   - name: inputs
     type: string
@@ -51,9 +69,13 @@ parameters:
     label:
       en_US: Inputs (JSON)
       zh_Hans: 输入变量(JSON)
+      ja_JP: 入力変数 (JSON)
+      pt_BR: Entradas (JSON)
     human_description:
       en_US: 'JSON object of the target app''s start-node variables, e.g. {"user_id": "abc"}. Leave empty if the target app declares none.'
       zh_Hans: '目标应用开始节点变量的 JSON 对象，例如 {"user_id": "abc"}。目标应用没有输入变量时留空。'
+      ja_JP: '対象アプリの開始ノード変数の JSON オブジェクト。例: {"user_id": "abc"}。対象アプリに入力変数がない場合は空欄にしてください。'
+      pt_BR: 'Objeto JSON das variáveis do nó inicial do app de destino, ex.: {"user_id": "abc"}. Deixe vazio se o app de destino não declarar nenhuma.'
     form: llm
 output_schema:
   type: object

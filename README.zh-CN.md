@@ -51,6 +51,19 @@ dify plugin package . -o stream-proxy.difypkg
 
 或直接运行 `./build.sh`。
 
+## 配置
+
+配置项在 **Provider 凭据页**（安装后打开插件点「配置」）。
+
+| 配置项 | 默认 | 说明 |
+|---|---|---|
+| `language` | `en_US` | 内置兜底提示文案的语言。可选 `en_US`、`zh_Hans`、`ja_JP`、`pt_BR` —— 即 Dify 插件 i18n 模型真正携带的 4 个 locale。 |
+| `fallback_message` | （空） | 填写后**原样输出**，覆盖 `language`。用于自定义文案、追加联系方式，或使用上表以外的语言。 |
+| `log_level` | `INFO` | 为向前兼容而声明，见「已知限制」。 |
+
+**为什么语言要做成配置而不是自动识别？** plugin daemon 不向插件暴露终端用户的 locale ——
+`ToolRuntime` 只有 `credentials`、`user_id`、`session_id`。没有可识别的东西，只能显式指定。
+
 ## 使用
 
 在工作流节点中添加 **Stream Call** 工具，填写参数：
@@ -100,8 +113,8 @@ DIFY_BACKWARDS_INVOCATION_READ_TIMEOUT   # 默认 240000 ms，从请求发起算
 
 ## 已知限制
 
-- 零输出兜底文案是硬编码的中文字符串。要修改或翻译，改 `tools/stream_call.py` 里的
-  `SERVICE_UNAVAILABLE_NOTICE`。
+- 内置兜底文案只覆盖 `en_US`、`zh_Hans`、`ja_JP`、`pt_BR` 四种语言。其他语言通过
+  `fallback_message` 配置项实现。其中 `ja_JP` 和 `pt_BR` 是尽力而为的翻译，欢迎指正。
 - Provider 层的 `log_level` 凭据声明了但没接到 SDK 的 logger 上，运行时无实际效果，
   保留是为了向前兼容。
 - 只解析目标应用的 `message` / `message_end` / `workflow_finished` / `error` 事件，

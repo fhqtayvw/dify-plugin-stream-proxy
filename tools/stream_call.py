@@ -10,9 +10,30 @@ from dify_plugin.entities.tool import ToolInvokeMessage
 # Triggered only on zero output: the target workflow FAILED, or the stream was
 # cut before the first text chunk arrived. Answers that already produced any
 # content (including truncated ones) are left untouched.
-SERVICE_UNAVAILABLE_NOTICE = (
-    '抱歉，服务暂时不可用，本次查询未返回结果，请稍后重试。若多次失败请联系管理员。'
-)
+#
+# Keyed by the locales Dify's plugin i18n model actually carries (en_US is
+# required, zh_Hans / ja_JP / pt_BR are the optional ones). Adding keys outside
+# that set has no effect -- I18nObject silently drops them.
+# The ja_JP and pt_BR strings are best-effort translations; corrections welcome.
+FALLBACK_MESSAGES = {
+    'en_US': (
+        'Sorry, the service is temporarily unavailable and returned no result. '
+        'Please try again later, and contact your administrator if it keeps failing.'
+    ),
+    'zh_Hans': (
+        '抱歉，服务暂时不可用，本次查询未返回结果，请稍后重试。若多次失败请联系管理员。'
+    ),
+    'ja_JP': (
+        '申し訳ありません。サービスが一時的に利用できないため、今回は結果を返せませんでした。'
+        'しばらくしてから再度お試しください。繰り返し失敗する場合は管理者にお問い合わせください。'
+    ),
+    'pt_BR': (
+        'Desculpe, o serviço está temporariamente indisponível e não retornou resultado. '
+        'Tente novamente mais tarde e, se o problema persistir, contate o administrador.'
+    ),
+}
+
+DEFAULT_LANGUAGE = 'en_US'
 
 
 class StreamCallTool(Tool):
@@ -91,7 +112,7 @@ class StreamCallTool(Tool):
             # Sent via create_text_message so it lands in the tool node's built-in
             # text output -- no output_schema change and no variable reference
             # change needed on the caller side.
-            full_answer = SERVICE_UNAVAILABLE_NOTICE
+            full_answer = self._fallback_message()
             yield self.create_text_message(full_answer)
 
         yield self.create_json_message({
@@ -100,6 +121,24 @@ class StreamCallTool(Tool):
         })
         yield self.create_variable_message('answer', full_answer)
         yield self.create_variable_message('conversation_id', new_conv_id)
+
+    def _fallback_message(self) -> str:
+        """Resolve the zero-output notice, preferring the caller's configuration.
+
+        `fallback_message` (a provider credential) wins if set. Otherwise the
+        `language` credential selects a built-in translation, falling back to
+        English for an unknown value.
+
+        The language has to be configured rather than auto-detected: the plugin
+        daemon does not expose the end user's locale to tools -- `ToolRuntime`
+        carries only `credentials`, `user_id` and `session_id`.
+        """
+        custom = (self.runtime.credentials.get('fallback_message') or '').strip()
+        if custom:
+            return custom
+
+        language = self.runtime.credentials.get('language') or DEFAULT_LANGUAGE
+        return FALLBACK_MESSAGES.get(language, FALLBACK_MESSAGES[DEFAULT_LANGUAGE])
 
     @staticmethod
     def _parse_inputs(raw: Any) -> dict:

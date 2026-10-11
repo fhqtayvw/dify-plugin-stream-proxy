@@ -4,31 +4,76 @@ identity:
   label:
     en_US: Stream Proxy
     zh_Hans: 流式代理
+    ja_JP: ストリームプロキシ
+    pt_BR: Proxy de Stream
   description:
     en_US: Call another Dify app with streaming response
     zh_Hans: 流式调用另一个Dify应用
+    ja_JP: 別の Dify アプリをストリーミング応答で呼び出します
+    pt_BR: Chame outro app Dify com resposta em streaming
   icon: icon.svg
+  tags:
+    - productivity
+    - utilities
 credentials_for_provider:
-  log_level:
+  language:
     type: select
     required: false
-    default: INFO
+    default: en_US
     options:
-      - value: DEBUG
+      - value: en_US
         label:
-          en_US: DEBUG
-          zh_Hans: 调试
-      - value: INFO
+          en_US: English
+          zh_Hans: 英语
+          ja_JP: 英語
+          pt_BR: Inglês
+      - value: zh_Hans
         label:
-          en_US: INFO
-          zh_Hans: 信息
-      - value: ERROR
+          en_US: Chinese (Simplified)
+          zh_Hans: 简体中文
+          ja_JP: 中国語（簡体字）
+          pt_BR: Chinês (Simplificado)
+      - value: ja_JP
         label:
-          en_US: ERROR
-          zh_Hans: 错误
+          en_US: Japanese
+          zh_Hans: 日语
+          ja_JP: 日本語
+          pt_BR: Japonês
+      - value: pt_BR
+        label:
+          en_US: Portuguese (Brazil)
+          zh_Hans: 葡萄牙语（巴西）
+          ja_JP: ポルトガル語（ブラジル）
+          pt_BR: Português (Brasil)
     label:
-      en_US: Log Level
-      zh_Hans: 日志级别
+      en_US: Fallback Message Language
+      zh_Hans: 兜底文案语言
+      ja_JP: フォールバックメッセージの言語
+      pt_BR: Idioma da mensagem de fallback
+    help:
+      en_US: Language of the notice shown when the target app returns nothing. Dify does not expose the end user's locale to plugins, so this cannot be auto-detected.
+      zh_Hans: 目标应用零输出时展示的提示文案语言。Dify 不向插件暴露终端用户的语言，因此无法自动识别。
+      ja_JP: 対象アプリが何も返さなかったときに表示するメッセージの言語です。Dify はプラグインにエンドユーザーのロケールを公開しないため、自動判別はできません。
+      pt_BR: Idioma do aviso exibido quando o app de destino não retorna nada. O Dify não expõe o idioma do usuário final aos plugins, então não é possível detectá-lo automaticamente.
+  fallback_message:
+    type: text-input
+    required: false
+    default: ''
+    label:
+      en_US: Fallback Message (override)
+      zh_Hans: 兜底文案（自定义覆盖）
+      ja_JP: フォールバックメッセージ（上書き）
+      pt_BR: Mensagem de fallback (substituir)
+    placeholder:
+      en_US: Leave empty to use the built-in translation for the language above
+      zh_Hans: 留空则使用上方所选语言的内置文案
+      ja_JP: 空欄の場合は上で選択した言語の組み込みメッセージを使用します
+      pt_BR: Deixe vazio para usar a tradução embutida do idioma acima
+    help:
+      en_US: If set, this text is shown verbatim and overrides the language setting above. Useful for adding a support contact.
+      zh_Hans: 填写后原样输出，覆盖上方的语言设置。适合追加联系方式。
+      ja_JP: 入力した場合、このテキストがそのまま表示され、上記の言語設定は無視されます。サポート連絡先の追記に便利です。
+      pt_BR: Se preenchido, este texto é exibido literalmente e substitui o idioma acima. Útil para incluir um contato de suporte.
 tools:
   - tools/stream_call.yaml
 extra:

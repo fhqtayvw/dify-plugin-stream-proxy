@@ -1,13 +1,17 @@
-version: 0.1.0
+version: 0.2.0
 type: plugin
 author: zhaocg
 name: stream-proxy
 label:
   en_US: Dify Stream Proxy
   zh_Hans: Dify流式代理
+  ja_JP: Dify ストリームプロキシ
+  pt_BR: Dify Stream Proxy
 description:
-  en_US: Call another Dify app with real-time streaming response passthrough
-  zh_Hans: 实时调用另一个Dify应用并流式透传响应
+  en_US: Call another Dify app and stream its answer back to the user in real time
+  zh_Hans: 调用另一个 Dify 应用，并把它的回答实时流式透传给用户
+  ja_JP: 別の Dify アプリを呼び出し、その回答をリアルタイムでユーザーにストリーミング転送します
+  pt_BR: Chame outro app Dify e transmita a resposta em streaming em tempo real para o usuário
 icon: icon.svg
 resource:
   memory: 268435456
@@ -20,7 +24,7 @@ plugins:
   tools:
     - provider/stream_proxy.yaml
 meta:
-  version: 0.1.0
+  version: 0.2.0
   arch:
     - amd64
     - arm64

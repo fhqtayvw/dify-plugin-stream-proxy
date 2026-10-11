@@ -57,6 +57,21 @@ dify plugin package . -o stream-proxy.difypkg
 
 Or run `./build.sh`.
 
+## Configuration
+
+Settings live on the **provider** credential page (after installing, open the plugin and click
+**Configure**).
+
+| Setting | Default | Description |
+|---|---|---|
+| `language` | `en_US` | Language of the built-in fallback notice. Options: `en_US`, `zh_Hans`, `ja_JP`, `pt_BR` — the four locales Dify's plugin i18n model actually carries. |
+| `fallback_message` | *(empty)* | If set, this text is shown **verbatim** and overrides `language`. Use it for a custom message, a support contact, or a language outside the list above. |
+| `log_level` | `INFO` | Declared for forward compatibility; see [Known limitations](#known-limitations). |
+
+**Why is the language a setting and not auto-detected?** The plugin daemon does not expose the end
+user's locale to tools — `ToolRuntime` carries only `credentials`, `user_id` and `session_id`. There
+is nothing to detect, so the plugin has to be told.
+
 ## Usage
 
 Add the **Stream Call** tool to a workflow node and fill in the parameters:
@@ -109,8 +124,9 @@ Two consequences:
 
 ## Known limitations
 
-- The zero-output fallback message is a hardcoded Chinese string. Edit `SERVICE_UNAVAILABLE_NOTICE`
-  in `tools/stream_call.py` to change or translate it.
+- The built-in fallback notice covers only `en_US`, `zh_Hans`, `ja_JP` and `pt_BR`. Other languages
+  work through the `fallback_message` setting. The `ja_JP` and `pt_BR` strings are best-effort
+  translations — corrections are welcome.
 - The provider-level `log_level` credential is declared but not wired to the SDK logger — it has no
   effect at runtime. It is kept for forward compatibility.
 - Only the target app's `message` / `message_end` / `workflow_finished` / `error` events are
